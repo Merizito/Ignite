@@ -1,0 +1,33 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Nn]ode_modules/
+x64/
+
+[Oo]bj/
+
+# NuGet Packages
+*.nupkg
+
+# svn
+.svn
+
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.Cache
+
+# Visual Studio Code
+.vscode/
