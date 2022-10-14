@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Launchbase" src="https://global-uploads.webflow.com/61d83a2ebb0ae01ab96e841a/62d86b52dd890b4acef46ec3_OG-ignite.jpg" width="400px" />
+    <img alt="Launchbase" src="https://global-uploads.webflow.com/61d83a2ebb0ae01ab96e841a/62d86b52dd890b4acef46ec3_OG-ignite.jpg" width="600px" />
 </h1>
 
 <h3 align="center">
