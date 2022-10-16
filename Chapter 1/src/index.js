@@ -1,6 +1,6 @@
-const { request, response } = require('express');
-const express = require('express');
-const { v4: uuidv4 } = require("uuid");     //universally unique identifier
+const { request, response } = require("express");
+const express = require("express");
+const { v4: uuidv4 } = require("uuid"); //universally unique identifier
 
 const app = express();
 
@@ -10,7 +10,7 @@ const customers = [];
 
 /**
  * Tipos de parâmetros
- * 
+ *
  * Route params => Serve para identificar um recurso para poder editar, deletar ou buscar algum recurso.
  * Query params => Paginação / Filtro
  * Body params => São os objetos de inserção/alteração de algum recurso. (JSON)
@@ -18,51 +18,63 @@ const customers = [];
 
 // Middleware
 function verifyIfExistsAccountCPF(request, response, next) {
-    const { cpf } = request.headers;
+  const { cpf } = request.headers;
 
-    const customer = customers.find((customer) => customer.cpf === cpf);
+  const customer = customers.find((customer) => customer.cpf === cpf);
 
-    if(!customer)
-    {
-        return response.status(400).json({ error: "Customer not found" });
-    }
+  if (!customer) {
+    return response.status(400).json({ error: "Customer not found" });
+  }
 
-    request.customer = customer;
+  request.customer = customer;
 
-    return next();
-};
-
+  return next();
+}
 
 app.post("/account", (request, response) => {
-    const {cpf, name} = request.body;
+  const { cpf, name } = request.body;
 
-    const customerAlreadyExists = customers.some(
-        (customer) => customer.cpf === cpf
-    );
+  const customerAlreadyExists = customers.some(
+    (customer) => customer.cpf === cpf
+  );
 
-    if(customerAlreadyExists)
-    {
-        return response.status(400).json({ error: "Customer already exists" });
-    }
+  if (customerAlreadyExists) {
+    return response.status(400).json({ error: "Customer already exists" });
+  }
 
-    customers.push({
-        cpf,
-        name,
-        id: uuidv4(),
-        statement: []
-    });
+  customers.push({
+    cpf,
+    name,
+    id: uuidv4(),
+    statement: [],
+  });
 
-    return response.status(201).send();
-
+  return response.status(201).send();
 });
 
 // app.use(verifyIfExistsAccountCPF);
 
 app.get("/statement", verifyIfExistsAccountCPF, (request, response) => {
-    const { customer } = request;    
+  const { customer } = request;
 
+  return response.json(customer.statement);
+});
 
-    return response.json(customer.statement);
+app.post("/deposit", verifyIfExistsAccountCPF, (request, response) => {
+  const { description, amount } = request.body;
+
+  const { customer } = request;
+
+  const statementOperation = {
+    description,
+    amount,
+    created_at: new Date(),
+    type: "credit",
+  };
+
+  customer.statement.push(statementOperation);
+
+  return response.status(201).send();
 });
 
 app.listen(3333);
