@@ -2,6 +2,7 @@
 [Dd]ebug/
 [Rr]elease/
 [Nn]ode_modules/
+!tmp/.gitkeep
 x64/
 
 [Oo]bj/
